@@ -1,4 +1,4 @@
-package com.astriex.justdoit
+package com.astriex.justdoit.data
 
 import android.os.Parcelable
 import androidx.room.Entity
