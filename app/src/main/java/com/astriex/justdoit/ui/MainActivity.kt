@@ -1,7 +1,8 @@
-package com.astriex.justdoit
+package com.astriex.justdoit.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.astriex.justdoit.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
