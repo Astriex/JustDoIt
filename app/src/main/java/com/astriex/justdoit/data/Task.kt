@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.text.DateFormat
 
-@Entity(tableName="task_table")
+@Entity(tableName = "task_table")
 @Parcelize
 data class Task(
     val name: String,
@@ -15,7 +15,7 @@ data class Task(
     val created: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
-): Parcelable {
+) : Parcelable {
 
     val createdDateFormatted: String
         get() = DateFormat.getDateTimeInstance().format(created)

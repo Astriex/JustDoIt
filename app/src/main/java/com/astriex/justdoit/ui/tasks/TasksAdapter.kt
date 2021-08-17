@@ -13,7 +13,7 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(DIFF_UTIL) 
 
     companion object {
 
-        val DIFF_UTIL = object: DiffUtil.ItemCallback<Task>() {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<Task>() {
             override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
                 return oldItem.id == newItem.id
             }
@@ -30,12 +30,12 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(DIFF_UTIL) 
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: Task) {
-                binding.apply {
-                    checkboxCompleted.isChecked = task.completed
-                    tvName.text = task.name
-                    tvName.paint.isStrikeThruText = task.completed
-                    ivLabelPriority.isVisible = task.important
-                }
+            binding.apply {
+                checkboxCompleted.isChecked = task.completed
+                tvName.text = task.name
+                tvName.paint.isStrikeThruText = task.completed
+                ivLabelPriority.isVisible = task.important
+            }
         }
     }
 
