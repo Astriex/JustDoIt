@@ -1,10 +1,17 @@
 package com.astriex.justdoit.data
 
 import androidx.room.*
+import com.astriex.justdoit.ui.tasks.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
+
+    fun getTasks(query: String, sortOrder: SortOrder, hideCompleted: Boolean): Flow<List<Task>> =
+        when (sortOrder) {
+            SortOrder.BY_DATE ->getTasksSortedByDateCreated(query, hideCompleted)
+            SortOrder.BY_NAME -> getTasksSortedByName(query, hideCompleted)
+        }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(task: Task)
@@ -15,7 +22,11 @@ interface TaskDao {
     @Delete
     suspend fun delete(task: Task)
 
-    @Query("SELECT * FROM TASK_TABLE WHERE name LIKE '%' || :searchQuery || '%' ORDER BY important DESC")
-    fun getTasks(searchQuery: String): Flow<List<Task>>
+    // we need separate functions for sorting because we cannot pass the column name used in
+    // query dynamically
+    @Query("SELECT * FROM TASK_TABLE WHERE (completed != :hideCompleted OR completed = 0) AND name LIKE '%' || :searchQuery || '%' ORDER BY important DESC, name")
+    fun getTasksSortedByName(searchQuery: String, hideCompleted: Boolean): Flow<List<Task>>
 
+    @Query("SELECT * FROM TASK_TABLE WHERE (completed != :hideCompleted OR completed = 0) AND name LIKE '%' || :searchQuery || '%' ORDER BY important DESC, created")
+    fun getTasksSortedByDateCreated(searchQuery: String, hideCompleted: Boolean): Flow<List<Task>>
 }
