@@ -1,11 +1,13 @@
 package com.astriex.justdoit.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.astriex.justdoit.data.TaskDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -18,10 +20,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(
-        app: Application,
+    fun provideTaskDatabase(
+        @ApplicationContext app: Context,
         callback: TaskDatabase.Callback
-    ) = Room.databaseBuilder(app, TaskDatabase::class.java, "task_database")
+    ): TaskDatabase = Room.databaseBuilder(app, TaskDatabase::class.java, "task_database")
         .fallbackToDestructiveMigration()
         .addCallback(callback)
         .build()

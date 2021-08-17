@@ -22,6 +22,7 @@
         android:layout_toStartOf="@id/ivLabelPriority"
         android:layout_toEndOf="@id/checkboxCompleted"
         android:ellipsize="end"
+        android:gravity="center_vertical"
         android:maxLines="1"
         tools:text="Example item" />
 
