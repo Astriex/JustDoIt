@@ -1,7 +1,6 @@
 package com.astriex.justdoit.data
 
 import androidx.room.*
-import com.astriex.justdoit.ui.tasks.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao
