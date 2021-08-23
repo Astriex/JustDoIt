@@ -9,7 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.astriex.justdoit.data.Task
 import com.astriex.justdoit.databinding.ItemTaskBinding
 
-class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(DIFF_UTIL) {
+class TasksAdapter(private val listener: OnItemClickListener) :
+    ListAdapter<Task, TasksAdapter.TasksViewHolder>(DIFF_UTIL) {
+
+    interface OnItemClickListener {
+        fun onItemClick(task: Task)
+        fun onCheckBoxClicked(task: Task, isChecked: Boolean)
+    }
 
     companion object {
 
@@ -26,8 +32,28 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(DIFF_UTIL) 
 
     }
 
-    class TasksViewHolder(private val binding: ItemTaskBinding) :
+    inner class TasksViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    if(position != RecyclerView.NO_POSITION) {
+                        val task = getItem(position)
+                        listener.onItemClick(task)
+                    }
+                }
+
+                checkboxCompleted.setOnClickListener {
+                    val position = adapterPosition
+                    if(position != RecyclerView.NO_POSITION) {
+                        val task = getItem(position)
+                        listener.onCheckBoxClicked(task, checkboxCompleted.isChecked)
+                    }
+                }
+            }
+        }
 
         fun bind(task: Task) {
             binding.apply {
